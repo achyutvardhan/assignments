@@ -1,3 +1,7 @@
+// ## Write to a file
+// Using the fs library again, try to write to the contents of a file.
+// You can use the fs library to as a black box, the goal is to understand async tasks.
+
 // ## Reading the contents of a file
 
 // Write code to read contents of a file and print it to the console.
@@ -16,17 +20,13 @@ function createReadPromise(file) {
 
 function createWritePromise() {
   return new Promise((re, rej) => {
-
-    setTimeout(()=>{
-
-        fs.writeFile(
-          "new.txt",
-          "hello i am new file created by Achyut Vardhan on 31-12-2023",
-          (err, data) => {
-            re(data);
-          }
-        );
-    },5000)
+    fs.writeFile(
+      "new.txt",
+      "hello i am new file created by Achyut Vardhan on 31-12-2023",
+      (err, data) => {
+        re(data);
+      }
+    );
   });
 }
 const callback = async () => {
