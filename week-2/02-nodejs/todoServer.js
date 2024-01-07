@@ -39,11 +39,44 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-  const express = require('express');
-  const bodyParser = require('body-parser');
-  
-  const app = express();
-  
-  app.use(bodyParser.json());
-  
-  module.exports = app;
+const express = require("express");
+const bodyParser = require("body-parser");
+const app = express();
+app.use(bodyParser.json());
+
+let todos = [];
+app.get("/todos", (req, res) => {
+  res.status(200).json(todos);
+});
+
+app.get("/todos/:id", (req, res) => {
+  const id = req.params.id;
+  const too = todos.find((val) => {val.id === id});
+  if(!too)
+  res.status(404);
+  else
+  res.status(200).json(too)
+});
+
+app.post('/todos',(req,res)=>{
+  const des = {
+    id : Math.floor(Math.random()*10),
+    title : req.body.title,
+    disc : req.body.description
+  }
+  todos.push(des);
+  res.status(201).json({message : "item added", des});
+})
+
+app.put('/todos/:id',(req,res)=>{
+  const avail = todos.findIndex((val)=> val.id == req.params.id);
+  if(avail===-1) return res.status(404);
+  todos[avail].title = req.body.title;
+  todos[avail].disc = req.body.description;
+  res.status(200).json(todos[avail]);
+})
+
+app.listen(8080, () => {
+  console.log("listening to port 8080...");
+});
+module.exports = app;
