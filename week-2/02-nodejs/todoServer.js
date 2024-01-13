@@ -76,6 +76,20 @@ app.put('/todos/:id',(req,res)=>{
   res.status(200).json(todos[avail]);
 })
 
+// app.delete('/todos/:id',(res,req)=>{
+//   const avail = todos.filter((val)=> val.id != req.params.id );
+//   if(!avail) return res.status(404);
+//   todos = avail;
+//   console.log(todos);
+// })
+
+app.delete('/todos/:id',(req,res)=>{
+  let avail = todos.filter((val)=> val.id!=req.params.id);
+  if(!avail) return res.status(404);
+  todos = avail;
+  res.status(200).json(todos);
+})
+
 app.listen(8080, () => {
   console.log("listening to port 8080...");
 });
